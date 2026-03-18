@@ -6,6 +6,20 @@
   'use strict';
 
   /* -----------------------------------------------------------
+     Settings from wp_localize_script (with fallbacks)
+     --------------------------------------------------------- */
+  var settings = (typeof unitvSettings !== 'undefined') ? unitvSettings : {};
+
+  var toastEnabled  = Boolean(settings.toastEnabled);
+  var toastInterval = parseInt(settings.toastInterval, 10) || 12;
+  var names         = (settings.toastNames && settings.toastNames.length)
+    ? settings.toastNames
+    : ['Rafael', 'Paula', 'Edson', 'Camila', 'Thiago', 'Mariana', 'João', 'Bruna', 'Carlos', 'Letícia'];
+  var products      = (settings.toastProducts && settings.toastProducts.length)
+    ? settings.toastProducts
+    : ['UNITV RECARGA MENSAL', 'UNITV RECARGA TRIMESTRAL', 'UNITV RECARGA ANUAL'];
+
+  /* -----------------------------------------------------------
      Header scroll effect
      --------------------------------------------------------- */
   var header = document.querySelector('.unitv-header');
@@ -25,16 +39,7 @@
   /* -----------------------------------------------------------
      Toast social proof
      --------------------------------------------------------- */
-  var names = [
-    'Rafael', 'Paula', 'Edson', 'Camila', 'Thiago',
-    'Mariana', 'João', 'Bruna', 'Carlos', 'Letícia'
-  ];
-
-  var products = [
-    'UNITV RECARGA MENSAL',
-    'UNITV RECARGA TRIMESTRAL',
-    'UNITV RECARGA ANUAL'
-  ];
+  if (!toastEnabled) return;
 
   function rand(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
@@ -83,10 +88,10 @@
     }, 5000);
   }
 
-  // First toast after 2.5s, then every 12s
+  // First toast after 2.5s, then every N seconds (from settings)
   setTimeout(function () {
     showToast();
-    setInterval(showToast, 12000);
+    setInterval(showToast, toastInterval * 1000);
   }, 2500);
 
 })();

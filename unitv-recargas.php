@@ -3,7 +3,7 @@
  * Plugin Name: UniTV Recargas VIP
  * Plugin URI:  https://controleunitv.shop
  * Description: Plugin de recargas digitais UniTV com páginas de planos, políticas e downloads.
- * Version:     1.0.0
+ * Version:     1.1.0
  * Author:      UniTV
  * Author URI:  https://controleunitv.shop
  * License:     GPL-2.0+
@@ -16,6 +16,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'UNITV_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'UNITV_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+
+/* ---------------------------------------------------------------
+ * Load shared helpers (always — needed by templates + admin)
+ * ------------------------------------------------------------- */
+require_once UNITV_PLUGIN_PATH . 'includes/helpers.php';
+
+/* ---------------------------------------------------------------
+ * Load admin panel (admin context only)
+ * ------------------------------------------------------------- */
+if ( is_admin() ) {
+	require_once UNITV_PLUGIN_PATH . 'includes/admin.php';
+}
 
 /* ---------------------------------------------------------------
  * Shortcode registration
@@ -102,7 +114,7 @@ function unitv_maybe_enqueue_assets() {
 		'unitv-recargas-style',
 		UNITV_PLUGIN_URL . 'assets/css/style.css',
 		array( 'unitv-google-fonts', 'unitv-bootstrap-icons' ),
-		'1.0.0'
+		'1.1.0'
 	);
 
 	// Plugin scripts
@@ -110,8 +122,27 @@ function unitv_maybe_enqueue_assets() {
 		'unitv-recargas-scripts',
 		UNITV_PLUGIN_URL . 'assets/js/scripts.js',
 		array(),
-		'1.0.0',
+		'1.1.0',
 		true
+	);
+
+	// Pass dynamic settings to JS (loaded from DB with defaults)
+	$toast_names_raw = unitv_opt( 'unitv_toast_names' );
+	$names_array     = array_filter( array_map( 'trim', explode( "\n", $toast_names_raw ) ) );
+
+	wp_localize_script(
+		'unitv-recargas-scripts',
+		'unitvSettings',
+		array(
+			'toastEnabled'  => (bool) unitv_opt( 'unitv_toast_enabled' ),
+			'toastInterval' => (int) unitv_opt( 'unitv_toast_interval' ),
+			'toastNames'    => array_values( $names_array ),
+			'toastProducts' => array(
+				'UNITV RECARGA MENSAL',
+				'UNITV RECARGA TRIMESTRAL',
+				'UNITV RECARGA ANUAL',
+			),
+		)
 	);
 }
 add_action( 'wp_enqueue_scripts', 'unitv_maybe_enqueue_assets' );

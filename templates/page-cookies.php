@@ -1,29 +1,49 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <?php
-$slugs       = get_option( 'unitv_pages_slugs', array() );
+// unitv_opt() is always available via helpers.php (loaded in unitv-recargas.php)
+$brand_name   = unitv_opt( 'unitv_brand_name' );
+$wa_number    = unitv_opt( 'unitv_whatsapp_number' );
+$wa_msg       = unitv_opt( 'unitv_whatsapp_message' );
+$wa_url       = 'https://wa.me/' . rawurlencode( $wa_number ) . ( $wa_msg ? '?text=' . rawurlencode( $wa_msg ) : '' );
+$show_fab     = (bool) unitv_opt( 'unitv_whatsapp_fab' );
+$show_wa_hdr  = (bool) unitv_opt( 'unitv_whatsapp_header' );
+$footer_brand = unitv_opt( 'unitv_footer_brand' );
+$footer_sub   = unitv_opt( 'unitv_footer_subtitle' );
+$footer_phone = unitv_opt( 'unitv_footer_phone' );
+$footer_copy  = unitv_opt( 'unitv_footer_copyright' );
+
+$slugs           = get_option( 'unitv_pages_slugs', array() );
 $url_privacidade = ! empty( $slugs['privacidade'] ) ? home_url( '/' . $slugs['privacidade'] . '/' ) : '#';
 $url_termos      = ! empty( $slugs['termos'] )      ? home_url( '/' . $slugs['termos']      . '/' ) : '#';
 $url_reembolso   = ! empty( $slugs['reembolso'] )   ? home_url( '/' . $slugs['reembolso']   . '/' ) : '#';
 $url_cookies     = ! empty( $slugs['cookies'] )     ? home_url( '/' . $slugs['cookies']     . '/' ) : '#';
+
+$policy_title   = unitv_opt( 'unitv_policy_cookies_title' );
+$policy_content = unitv_opt( 'unitv_policy_cookies_content' );
 ?>
 <div class="unitv-wrap">
 
   <header class="unitv-header">
     <div class="container">
-      <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="brand-name">UniTV</a>
+      <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="brand-name"><?php echo esc_html( $brand_name ); ?></a>
       <div class="header-actions">
-        <a href="<?php echo esc_url( home_url( '/recargas-vip/' ) ); ?>#recargas" class="btn btn-primary">Comprar</a>
-        <a href="https://wa.me/5541984613998" target="_blank" rel="noopener noreferrer" class="header-wa" aria-label="WhatsApp">
+        <a href="<?php echo esc_url( home_url( '/recargas-vip/#recargas' ) ); ?>" class="btn btn-primary">Comprar</a>
+        <?php if ( $show_wa_hdr ) : ?>
+        <a href="<?php echo esc_url( $wa_url ); ?>" target="_blank" rel="noopener noreferrer" class="header-wa" aria-label="WhatsApp">
           <i class="bi bi-whatsapp"></i>
         </a>
+        <?php endif; ?>
       </div>
     </div>
   </header>
 
   <section class="policy-section">
     <div class="container">
-      <h1>Política de Cookies</h1>
+      <h1><?php echo esc_html( $policy_title ); ?></h1>
 
+      <?php if ( ! empty( $policy_content ) ) : ?>
+        <?php echo wp_kses_post( $policy_content ); ?>
+      <?php else : ?>
       <p>Esta Política de Cookies explica o que são cookies, quais tipos utilizamos em <strong>controleunitv.shop</strong> e como você pode gerenciá-los. Estamos em conformidade com a Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).</p>
       <p><em>Última atualização: <?php echo esc_html( date( 'd/m/Y' ) ); ?></em></p>
 
@@ -77,9 +97,10 @@ $url_cookies     = ! empty( $slugs['cookies'] )     ? home_url( '/' . $slugs['co
       <h2>7. Contato</h2>
       <p>Dúvidas sobre nossa Política de Cookies? Entre em contato:</p>
       <ul>
-        <li><strong>WhatsApp:</strong> <a href="https://wa.me/5541984613998">(41) 98461‑3998</a></li>
+        <li><strong>WhatsApp:</strong> <a href="<?php echo esc_url( $wa_url ); ?>"><?php echo esc_html( $wa_number ); ?></a></li>
         <li><strong>Site:</strong> <a href="https://controleunitv.shop" target="_blank" rel="noopener noreferrer">controleunitv.shop</a></li>
       </ul>
+      <?php endif; ?>
     </div>
   </section>
 
@@ -87,13 +108,15 @@ $url_cookies     = ! empty( $slugs['cookies'] )     ? home_url( '/' . $slugs['co
     <div class="container">
       <div class="footer-inner">
         <div>
-          <div class="footer-brand-label">UniTV</div>
-          <div class="footer-sub">Recargas Digitais — Venda de cartões de recarga digitais</div>
+          <div class="footer-brand-label"><?php echo esc_html( $footer_brand ); ?></div>
+          <div class="footer-sub"><?php echo esc_html( $footer_sub ); ?></div>
         </div>
-        <p class="footer-phone"><i class="bi bi-telephone-fill"></i> (41) 98461‑3998</p>
+        <?php if ( $footer_phone ) : ?>
+        <p class="footer-phone"><i class="bi bi-telephone-fill"></i> <?php echo esc_html( $footer_phone ); ?></p>
+        <?php endif; ?>
         <div class="footer-actions">
-          <a href="<?php echo esc_url( home_url( '/recargas-vip/' ) ); ?>#recargas" class="btn btn-primary"><i class="bi bi-bag-heart-fill"></i> Comprar Recarga</a>
-          <a href="https://wa.me/5541984613998" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+          <a href="<?php echo esc_url( home_url( '/recargas-vip/#recargas' ) ); ?>" class="btn btn-primary"><i class="bi bi-bag-heart-fill"></i> Comprar Recarga</a>
+          <a href="<?php echo esc_url( $wa_url ); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
             <i class="bi bi-whatsapp"></i> WhatsApp
           </a>
         </div>
@@ -103,13 +126,15 @@ $url_cookies     = ! empty( $slugs['cookies'] )     ? home_url( '/' . $slugs['co
           <a href="<?php echo esc_url( $url_reembolso ); ?>">Política de Reembolso</a>
           <a href="<?php echo esc_url( $url_cookies ); ?>">Política de Cookies</a>
         </nav>
-        <p class="footer-copy">&copy; <?php echo esc_html( date( 'Y' ) ); ?> UniTV. Todos os direitos reservados.</p>
+        <p class="footer-copy">&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php echo esc_html( $footer_copy ); ?></p>
       </div>
     </div>
   </footer>
 
-  <a href="https://wa.me/5541984613998" class="fab-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
+  <?php if ( $show_fab ) : ?>
+  <a href="<?php echo esc_url( $wa_url ); ?>" class="fab-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
     <i class="bi bi-whatsapp"></i>
   </a>
+  <?php endif; ?>
 
 </div><!-- .unitv-wrap -->
