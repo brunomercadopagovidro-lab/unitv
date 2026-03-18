@@ -109,9 +109,9 @@
   $(document).on('click', '.unitv-row-remove', function () {
     var $row  = $(this).closest('.unitv-repeater-row');
     var $list = $row.parent();
-    var key   = $list.attr('id').replace('-list', '');
+    var key   = $list.attr('id').replace('-list', '').replace(/s$/, '');
     $row.remove();
-    reindex($list, key.replace(/s$/, '').replace('download', 'download').replace('review', 'review'));
+    reindex($list, key);
   });
 
   /* -----------------------------------------------------------
