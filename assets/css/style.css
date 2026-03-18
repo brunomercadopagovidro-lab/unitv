@@ -1,28 +1,29 @@
 /* =============================================================
-   UniTV Recargas VIP — style.css
+   UniTV Recargas VIP — style.css  (light/white theme)
    ============================================================= */
 
 /* ---------------------------------------------------------------
    0. Custom Properties
    ------------------------------------------------------------- */
 :root {
+  --text:        #1b1b1f;
+  --muted:       #6b7280;
   --brand:       #c71b3a;
   --brand-dark:  #9a0e2a;
   --grad1:       #b50f3a;
   --grad2:       #6a11cb;
+  --card-border: rgba(199,27,58,.18);
+  --inner-border:#e8e8f0;
   --accent:      #ffb400;
   --ok:          #25D366;
   --ok-dark:     #1da851;
-  --bg:          #0d0d0f;
-  --bg2:         #141418;
-  --bg3:         #1c1c22;
-  --text:        #f0f0f5;
-  --muted:       #9090a0;
-  --card-bg:     #18181f;
-  --card-border: rgba(255,255,255,.07);
-  --radius:      14px;
+  --surface:     #f8f7fc;
+  --shadow-sm:   0 2px 8px rgba(0,0,0,.06);
+  --shadow:      0 8px 32px rgba(0,0,0,.08);
+  --shadow-lg:   0 16px 48px rgba(0,0,0,.12);
+  --radius:      16px;
+  --radius-lg:   24px;
   --transition:  .28s cubic-bezier(.4,0,.2,1);
-  --shadow:      0 4px 30px rgba(0,0,0,.5);
 }
 
 /* ---------------------------------------------------------------
@@ -34,7 +35,7 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'DM Sans', system-ui, sans-serif;
-  background: var(--bg);
+  background: #fff;
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -47,8 +48,13 @@ img { display: block; max-width: 100%; }
 /* ---------------------------------------------------------------
    2. Utility
    ------------------------------------------------------------- */
+.unitv-wrap {
+  background: #fff;
+  width: 100%;
+}
+
 .container {
-  width: min(1160px, 92%);
+  width: min(1100px, 92%);
   margin-inline: auto;
 }
 
@@ -71,18 +77,18 @@ img { display: block; max-width: 100%; }
 .btn-primary {
   background: linear-gradient(135deg, var(--grad1), var(--grad2));
   color: #fff;
-  box-shadow: 0 4px 20px rgba(199,27,58,.4);
+  box-shadow: 0 4px 20px rgba(199,27,58,.25);
 }
 .btn-primary:hover {
-  filter: brightness(1.12);
+  filter: brightness(1.1);
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(199,27,58,.55);
+  box-shadow: 0 8px 28px rgba(199,27,58,.38);
 }
 
 .btn-whatsapp {
   background: var(--ok);
   color: #fff;
-  box-shadow: 0 4px 20px rgba(37,211,102,.35);
+  box-shadow: 0 4px 20px rgba(37,211,102,.25);
 }
 .btn-whatsapp:hover {
   background: var(--ok-dark);
@@ -102,9 +108,9 @@ img { display: block; max-width: 100%; }
 }
 
 .badge-brand {
-  background: rgba(199,27,58,.18);
+  background: rgba(199,27,58,.1);
   color: var(--brand);
-  border: 1px solid rgba(199,27,58,.35);
+  border: 1px solid rgba(199,27,58,.25);
 }
 
 /* ---------------------------------------------------------------
@@ -114,16 +120,16 @@ img { display: block; max-width: 100%; }
   position: sticky;
   top: 0;
   z-index: 900;
-  background: rgba(13,13,15,.7);
+  background: rgba(255,255,255,.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--inner-border);
   transition: background var(--transition), box-shadow var(--transition);
 }
 
 .unitv-header.scrolled {
-  background: rgba(13,13,15,.95);
-  box-shadow: 0 2px 20px rgba(0,0,0,.6);
+  background: rgba(255,255,255,.98);
+  box-shadow: var(--shadow-sm);
 }
 
 .unitv-header .container {
@@ -174,6 +180,7 @@ img { display: block; max-width: 100%; }
   padding: 6rem 0 5rem;
   overflow: hidden;
   text-align: center;
+  background: #fff;
 }
 
 .hero::before,
@@ -182,7 +189,7 @@ img { display: block; max-width: 100%; }
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: .18;
+  opacity: .08;
   pointer-events: none;
 }
 .hero::before {
@@ -206,6 +213,7 @@ img { display: block; max-width: 100%; }
   font-weight: 800;
   line-height: 1.15;
   margin-bottom: 1.2rem;
+  color: var(--text);
 }
 
 .hero-title .gradient-text {
@@ -275,6 +283,7 @@ img { display: block; max-width: 100%; }
   font-size: clamp(1.6rem, 3.5vw, 2.4rem);
   font-weight: 800;
   margin-bottom: .6rem;
+  color: var(--text);
 }
 
 .section-header p {
@@ -289,7 +298,7 @@ img { display: block; max-width: 100%; }
    ------------------------------------------------------------- */
 .recargas-section {
   padding: 4rem 0;
-  background: var(--bg2);
+  background: var(--surface);
 }
 
 .plans-grid {
@@ -300,8 +309,8 @@ img { display: block; max-width: 100%; }
 }
 
 .plan-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  background: #fff;
+  border: 1px solid var(--inner-border);
   border-radius: var(--radius);
   overflow: hidden;
   transition: transform var(--transition), box-shadow var(--transition);
@@ -315,12 +324,12 @@ img { display: block; max-width: 100%; }
 
 .plan-card.featured {
   border-color: var(--brand);
-  box-shadow: 0 0 0 1px var(--brand), 0 8px 40px rgba(199,27,58,.25);
+  box-shadow: 0 0 0 1px var(--brand), var(--shadow);
   transform: translateY(-8px);
 }
 .plan-card.featured:hover {
   transform: translateY(-14px);
-  box-shadow: 0 0 0 1px var(--brand), 0 14px 50px rgba(199,27,58,.4);
+  box-shadow: 0 0 0 1px var(--brand), var(--shadow-lg);
 }
 
 /* Ribbon */
@@ -329,24 +338,25 @@ img { display: block; max-width: 100%; }
   position: absolute;
   top: 16px;
   right: -32px;
-  background: var(--brand);
-  color: #fff;
+  background: var(--accent);
+  color: #2a1a00;
   font-size: .65rem;
   font-weight: 800;
   letter-spacing: .08em;
   padding: .3rem 2.8rem;
   transform: rotate(45deg);
   z-index: 10;
-  box-shadow: 0 2px 8px rgba(0,0,0,.4);
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
 }
 
 .plan-img-wrap {
-  background: linear-gradient(160deg, #1e1e28, #0d0d0f);
+  background: var(--surface);
   padding: 1.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 180px;
+  border-bottom: 1px solid var(--inner-border);
 }
 
 .plan-img-wrap img {
@@ -394,8 +404,8 @@ img { display: block; max-width: 100%; }
 
 .plan-discount {
   display: inline-block;
-  background: rgba(37,211,102,.15);
-  color: var(--ok);
+  background: rgba(37,211,102,.12);
+  color: var(--ok-dark);
   border-radius: 4px;
   padding: .1rem .4rem;
   font-size: .72rem;
@@ -407,7 +417,7 @@ img { display: block; max-width: 100%; }
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 2rem;
   font-weight: 800;
-  color: var(--text);
+  color: var(--brand);
   margin-bottom: 1.2rem;
 }
 .plan-price small { font-size: 1rem; font-weight: 600; vertical-align: super; }
@@ -429,20 +439,21 @@ img { display: block; max-width: 100%; }
 .plan-btn-primary {
   background: linear-gradient(135deg, var(--grad1), var(--grad2));
   color: #fff;
-  box-shadow: 0 4px 16px rgba(199,27,58,.35);
+  box-shadow: 0 4px 16px rgba(199,27,58,.25);
 }
 .plan-btn-primary:hover {
-  filter: brightness(1.15);
+  filter: brightness(1.1);
   transform: translateY(-2px);
 }
 
 .plan-btn-outline {
-  border: 1.5px solid var(--card-border);
-  color: var(--muted);
+  border: 1.5px solid var(--brand);
+  color: var(--brand);
+  background: transparent;
 }
 .plan-btn-outline:hover {
-  border-color: var(--brand);
-  color: var(--brand);
+  background: var(--brand);
+  color: #fff;
 }
 
 /* ---------------------------------------------------------------
@@ -450,6 +461,7 @@ img { display: block; max-width: 100%; }
    ------------------------------------------------------------- */
 .features-section {
   padding: 4.5rem 0;
+  background: #fff;
 }
 
 .features-grid {
@@ -459,16 +471,18 @@ img { display: block; max-width: 100%; }
 }
 
 .feature-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  background: #fff;
+  border: 1px solid var(--inner-border);
   border-radius: var(--radius);
   padding: 2rem 1.6rem;
   text-align: center;
-  transition: transform var(--transition), border-color var(--transition);
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  box-shadow: var(--shadow-sm);
 }
 .feature-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(199,27,58,.4);
+  border-color: var(--card-border);
+  box-shadow: var(--shadow);
 }
 
 .feature-icon {
@@ -482,6 +496,7 @@ img { display: block; max-width: 100%; }
   font-size: 1.05rem;
   font-weight: 700;
   margin-bottom: .6rem;
+  color: var(--text);
 }
 
 .feature-card p {
@@ -495,7 +510,7 @@ img { display: block; max-width: 100%; }
    ------------------------------------------------------------- */
 .downloads-section {
   padding: 4rem 0;
-  background: var(--bg2);
+  background: var(--surface);
 }
 
 .downloads-grid {
@@ -507,19 +522,21 @@ img { display: block; max-width: 100%; }
 .download-card {
   border-radius: var(--radius);
   overflow: hidden;
-  background: linear-gradient(160deg, var(--bg3), var(--bg));
-  border: 1px solid var(--card-border);
+  background: linear-gradient(160deg, var(--grad1), var(--grad2));
+  border: none;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 1.8rem 1rem 1.4rem;
   gap: 1rem;
-  transition: transform var(--transition), border-color var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition);
   text-align: center;
+  color: #fff;
+  box-shadow: var(--shadow-sm);
 }
 .download-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(199,27,58,.4);
+  box-shadow: var(--shadow);
 }
 
 .download-card img {
@@ -535,6 +552,7 @@ img { display: block; max-width: 100%; }
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: .95rem;
   font-weight: 700;
+  color: #fff;
 }
 
 .download-card .btn {
@@ -542,6 +560,15 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   padding: .6rem 1rem;
   font-size: .8rem;
+  background: rgba(255,255,255,.18);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.35);
+  backdrop-filter: blur(4px);
+}
+.download-card .btn:hover {
+  background: rgba(255,255,255,.3);
+  transform: none;
+  box-shadow: none;
 }
 
 /* ---------------------------------------------------------------
@@ -549,6 +576,7 @@ img { display: block; max-width: 100%; }
    ------------------------------------------------------------- */
 .reviews-section {
   padding: 4.5rem 0;
+  background: #fff;
 }
 
 .reviews-grid {
@@ -558,16 +586,20 @@ img { display: block; max-width: 100%; }
 }
 
 .review-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  background: #fff;
+  border: 1px solid var(--inner-border);
   border-radius: var(--radius);
   padding: 1.4rem;
   display: flex;
   flex-direction: column;
   gap: .8rem;
-  transition: transform var(--transition);
+  transition: transform var(--transition), box-shadow var(--transition);
+  box-shadow: var(--shadow-sm);
 }
-.review-card:hover { transform: translateY(-4px); }
+.review-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
 
 .review-stars {
   color: var(--accent);
@@ -593,21 +625,22 @@ img { display: block; max-width: 100%; }
   height: 38px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--card-border);
+  border: 2px solid var(--inner-border);
 }
 
 .review-author-name {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: .85rem;
   font-weight: 700;
+  color: var(--text);
 }
 
 /* ---------------------------------------------------------------
    10. Footer
    ------------------------------------------------------------- */
 .unitv-footer {
-  background: var(--bg3);
-  border-top: 1px solid var(--card-border);
+  background: #fff;
+  border-top: 1px solid var(--inner-border);
   padding: 3rem 0 1.5rem;
 }
 
@@ -661,7 +694,7 @@ img { display: block; max-width: 100%; }
 .footer-copy {
   font-size: .76rem;
   color: var(--muted);
-  opacity: .6;
+  opacity: .7;
   margin-top: .5rem;
 }
 
@@ -682,13 +715,13 @@ img { display: block; max-width: 100%; }
   align-items: center;
   justify-content: center;
   font-size: 1.55rem;
-  box-shadow: 0 4px 24px rgba(37,211,102,.55);
+  box-shadow: 0 4px 24px rgba(37,211,102,.4);
   transition: var(--transition);
 }
 .fab-whatsapp:hover {
   background: var(--ok-dark);
   transform: scale(1.1);
-  box-shadow: 0 6px 30px rgba(37,211,102,.7);
+  box-shadow: 0 6px 30px rgba(37,211,102,.55);
 }
 
 /* ---------------------------------------------------------------
@@ -699,15 +732,16 @@ img { display: block; max-width: 100%; }
   bottom: 1.6rem;
   left: 1.6rem;
   z-index: 1000;
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  background: #fff;
+  border: 1px solid var(--inner-border);
+  border-left: 4px solid var(--ok);
   border-radius: var(--radius);
   padding: .9rem 1.1rem;
   display: flex;
   align-items: center;
   gap: .8rem;
   max-width: 300px;
-  box-shadow: 0 8px 32px rgba(0,0,0,.5);
+  box-shadow: var(--shadow);
   opacity: 0;
   transform: translateY(16px);
   transition: opacity .4s ease, transform .4s ease;
@@ -737,6 +771,7 @@ img { display: block; max-width: 100%; }
   display: block;
   font-size: .82rem;
   font-weight: 700;
+  color: var(--text);
 }
 
 .toast-text span {
@@ -749,6 +784,7 @@ img { display: block; max-width: 100%; }
    ------------------------------------------------------------- */
 .policy-section {
   padding: 4rem 0 5rem;
+  background: #fff;
 }
 
 .policy-section h1 {
@@ -824,3 +860,4 @@ img { display: block; max-width: 100%; }
 
   .unitv-toast { left: .8rem; right: .8rem; max-width: none; }
 }
+

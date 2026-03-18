@@ -1,23 +1,110 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <?php
+// unitv_opt() and unitv_defaults() are always available via helpers.php (loaded in unitv-recargas.php)
+$defaults = unitv_defaults();
+
 // Build policy page URLs
-$slugs       = get_option( 'unitv_pages_slugs', array() );
+$slugs           = get_option( 'unitv_pages_slugs', array() );
 $url_privacidade = ! empty( $slugs['privacidade'] ) ? home_url( '/' . $slugs['privacidade'] . '/' ) : '#';
 $url_termos      = ! empty( $slugs['termos'] )      ? home_url( '/' . $slugs['termos']      . '/' ) : '#';
 $url_reembolso   = ! empty( $slugs['reembolso'] )   ? home_url( '/' . $slugs['reembolso']   . '/' ) : '#';
 $url_cookies     = ! empty( $slugs['cookies'] )     ? home_url( '/' . $slugs['cookies']     . '/' ) : '#';
+
+// General
+$brand_name = unitv_opt( 'unitv_brand_name' );
+$wa_number  = unitv_opt( 'unitv_whatsapp_number' );
+$wa_msg     = unitv_opt( 'unitv_whatsapp_message' );
+$wa_url     = 'https://wa.me/' . rawurlencode( $wa_number ) . ( $wa_msg ? '?text=' . rawurlencode( $wa_msg ) : '' );
+$show_fab   = (bool) unitv_opt( 'unitv_whatsapp_fab' );
+$show_wa_hdr= (bool) unitv_opt( 'unitv_whatsapp_header' );
+
+// Hero
+$hero_badge    = unitv_opt( 'unitv_hero_badge' );
+$hero_title    = unitv_opt( 'unitv_hero_title' );
+$hero_grad     = unitv_opt( 'unitv_hero_gradient_word' );
+$hero_desc     = unitv_opt( 'unitv_hero_desc' );
+$hero_cta_text = unitv_opt( 'unitv_hero_cta_text' );
+$hero_cta_link = unitv_opt( 'unitv_hero_cta_link' );
+$hero_stat_num = unitv_opt( 'unitv_hero_stat_number' );
+$hero_stat_lbl = unitv_opt( 'unitv_hero_stat_label' );
+$hero_trust    = unitv_opt( 'unitv_hero_trust' );
+if ( ! is_array( $hero_trust ) ) {
+	$hero_trust = $defaults['unitv_hero_trust'];
+}
+
+// Plans
+$plans_title    = unitv_opt( 'unitv_plans_title' );
+$plans_subtitle = unitv_opt( 'unitv_plans_subtitle' );
+$plans          = unitv_opt( 'unitv_plans' );
+if ( ! is_array( $plans ) ) {
+	$plans = $defaults['unitv_plans'];
+}
+$plans = array_filter( $plans, function( $p ) { return ! empty( $p['active'] ) && $p['active'] === '1'; } );
+
+// Features
+$features_title    = unitv_opt( 'unitv_features_title' );
+$features_subtitle = unitv_opt( 'unitv_features_subtitle' );
+$features          = unitv_opt( 'unitv_features' );
+if ( ! is_array( $features ) ) {
+	$features = $defaults['unitv_features'];
+}
+$features = array_filter( $features, function( $f ) { return ! empty( $f['active'] ) && $f['active'] === '1'; } );
+
+// Downloads
+$downloads_title    = unitv_opt( 'unitv_downloads_title' );
+$downloads_subtitle = unitv_opt( 'unitv_downloads_subtitle' );
+$downloads          = unitv_opt( 'unitv_downloads' );
+if ( ! is_array( $downloads ) ) {
+	$downloads = $defaults['unitv_downloads'];
+}
+$downloads = array_filter( $downloads, function( $d ) { return ! empty( $d['active'] ) && $d['active'] === '1'; } );
+
+// Reviews
+$reviews_title    = unitv_opt( 'unitv_reviews_title' );
+$reviews_subtitle = unitv_opt( 'unitv_reviews_subtitle' );
+$reviews          = unitv_opt( 'unitv_reviews' );
+if ( ! is_array( $reviews ) ) {
+	$reviews = $defaults['unitv_reviews'];
+}
+$reviews = array_filter( $reviews, function( $r ) { return ! empty( $r['active'] ) && $r['active'] === '1'; } );
+
+// Footer
+$footer_brand     = unitv_opt( 'unitv_footer_brand' );
+$footer_subtitle  = unitv_opt( 'unitv_footer_subtitle' );
+$footer_phone     = unitv_opt( 'unitv_footer_phone' );
+$footer_show_buy  = (bool) unitv_opt( 'unitv_footer_show_buy' );
+$footer_show_wa   = (bool) unitv_opt( 'unitv_footer_show_wa' );
+$footer_copyright = unitv_opt( 'unitv_footer_copyright' );
+$footer_links     = unitv_opt( 'unitv_footer_links' );
+if ( ! is_array( $footer_links ) ) {
+	$footer_links = array();
+}
+
+// Helper: render stars (5 filled icons always)
+function unitv_plan_stars() {
+	$html = '';
+	for ( $i = 0; $i < 5; $i++ ) {
+		$html .= '<i class="bi bi-star-fill"></i>';
+	}
+	return $html;
+}
+
+// Delay classes for animation
+$delays = array( 'delay-1', 'delay-2', 'delay-3', 'delay-4', 'delay-5', 'delay-6' );
 ?>
 <div class="unitv-wrap">
 
   <!-- HEADER -->
   <header class="unitv-header">
     <div class="container">
-      <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="brand-name">UniTV</a>
+      <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="brand-name"><?php echo esc_html( $brand_name ); ?></a>
       <div class="header-actions">
-        <a href="#recargas" class="btn btn-primary">Comprar</a>
-        <a href="https://wa.me/5541984613998" target="_blank" rel="noopener noreferrer" class="header-wa" aria-label="WhatsApp">
+        <a href="<?php echo esc_attr( $hero_cta_link ); ?>" class="btn btn-primary">Comprar</a>
+        <?php if ( $show_wa_hdr ) : ?>
+        <a href="<?php echo esc_url( $wa_url ); ?>" target="_blank" rel="noopener noreferrer" class="header-wa" aria-label="WhatsApp">
           <i class="bi bi-whatsapp"></i>
         </a>
+        <?php endif; ?>
       </div>
     </div>
   </header>
@@ -25,24 +112,22 @@ $url_cookies     = ! empty( $slugs['cookies'] )     ? home_url( '/' . $slugs['co
   <!-- HERO -->
   <section class="hero">
     <div class="container">
-      <span class="badge badge-brand fade-up"><i class="bi bi-lightning-charge-fill"></i> Envio Imediato — 24 Horas</span>
+      <span class="badge badge-brand fade-up"><i class="bi bi-lightning-charge-fill"></i> <?php echo esc_html( $hero_badge ); ?></span>
       <h1 class="hero-title fade-up delay-1">
-        Recargas <span class="gradient-text">UniTV</span>
+        <?php echo esc_html( $hero_title ); ?> <span class="gradient-text"><?php echo esc_html( $hero_grad ); ?></span>
       </h1>
-      <p class="hero-desc fade-up delay-2">
-        Planos de 30, 60, 90 e 365 dias com pagamento via PIX. Receba seu código de ativação de forma imediata por e-mail e WhatsApp após a confirmação do pagamento.
-      </p>
+      <p class="hero-desc fade-up delay-2"><?php echo esc_html( $hero_desc ); ?></p>
       <div class="hero-cta fade-up delay-2">
-        <a href="#recargas" class="btn btn-primary"><i class="bi bi-bag-heart-fill"></i> Comprar Recarga</a>
+        <a href="<?php echo esc_attr( $hero_cta_link ); ?>" class="btn btn-primary"><i class="bi bi-bag-heart-fill"></i> <?php echo esc_html( $hero_cta_text ); ?></a>
       </div>
       <p class="hero-stat fade-up delay-3">
         <span class="dot"></span>
-        <strong>30.770+</strong>&nbsp;Recargas Realizadas
+        <strong><?php echo esc_html( $hero_stat_num ); ?></strong>&nbsp;<?php echo esc_html( $hero_stat_lbl ); ?>
       </p>
       <div class="trust-row fade-up delay-3">
-        <span class="trust-item"><i class="bi bi-shield-lock-fill"></i> Pagamento Seguro</span>
-        <span class="trust-item"><i class="bi bi-send-fill"></i> Envio Imediato</span>
-        <span class="trust-item"><i class="bi bi-headset"></i> Suporte 24h</span>
+        <?php foreach ( $hero_trust as $item ) : ?>
+        <span class="trust-item"><i class="bi <?php echo esc_attr( $item['icon'] ); ?>"></i> <?php echo esc_html( $item['text'] ); ?></span>
+        <?php endforeach; ?>
       </div>
     </div>
   </section>
@@ -51,75 +136,36 @@ $url_cookies     = ! empty( $slugs['cookies'] )     ? home_url( '/' . $slugs['co
   <section class="recargas-section" id="recargas">
     <div class="container">
       <div class="section-header">
-        <h2>Escolha o seu Plano</h2>
-        <p>Sem taxas ocultas. Ativação imediata via WhatsApp e e-mail.</p>
+        <h2><?php echo esc_html( $plans_title ); ?></h2>
+        <p><?php echo esc_html( $plans_subtitle ); ?></p>
       </div>
 
       <div class="plans-grid">
-
-        <!-- Card Mensal -->
-        <div class="plan-card fade-up delay-1">
+        <?php $pi = 0; foreach ( $plans as $plan ) :
+          $is_featured = ! empty( $plan['featured'] ) && $plan['featured'] === '1';
+          $delay       = $delays[ $pi % count( $delays ) ];
+          $pi++;
+        ?>
+        <div class="plan-card <?php echo $is_featured ? 'featured' : ''; ?> fade-up <?php echo esc_attr( $delay ); ?>">
           <div class="plan-img-wrap">
-            <img src="https://controleunitv.shop/wp-content/uploads/2026/03/card.30.png" alt="UNITV Recarga Mensal" loading="lazy">
+            <img src="<?php echo esc_url( $plan['img'] ); ?>" alt="<?php echo esc_attr( $plan['name'] ); ?>" loading="lazy">
           </div>
           <div class="plan-body">
             <div class="plan-rating">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-              <span>4.99 (12.196)</span>
+              <?php echo wp_kses( unitv_plan_stars(), array( 'i' => array( 'class' => array() ) ) ); ?>
+              <span><?php echo esc_html( $plan['rating'] ); ?> (<?php echo esc_html( $plan['reviews'] ); ?>)</span>
             </div>
-            <p class="plan-name">UNITV Recarga Mensal</p>
+            <p class="plan-name"><?php echo esc_html( $plan['name'] ); ?></p>
             <div class="plan-price-old">
-              R$ 50,00 <span class="plan-discount">-50%</span>
+              <?php echo esc_html( $plan['price_old'] ); ?> <span class="plan-discount"><?php echo esc_html( $plan['discount'] ); ?></span>
             </div>
-            <div class="plan-price"><small>R$</small>24,90</div>
-            <a href="https://loja.controleunitv.shop/checkout?plano=mensal" class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer">
-              <i class="bi bi-bag-fill"></i> Comprar Agora
+            <div class="plan-price"><small>R$</small><?php echo esc_html( $plan['price'] ); ?></div>
+            <a href="<?php echo esc_url( $plan['url'] ); ?>" class="plan-btn <?php echo $is_featured ? 'plan-btn-primary' : 'plan-btn-outline'; ?>" target="_blank" rel="noopener noreferrer">
+              <i class="bi <?php echo $is_featured ? 'bi-bag-heart-fill' : 'bi-bag-fill'; ?>"></i> Comprar Agora
             </a>
           </div>
         </div>
-
-        <!-- Card Trimestral (FEATURED) -->
-        <div class="plan-card featured fade-up delay-2">
-          <div class="plan-img-wrap">
-            <img src="https://controleunitv.shop/wp-content/uploads/2026/03/card-90-1.png" alt="UNITV Recarga Trimestral" loading="lazy">
-          </div>
-          <div class="plan-body">
-            <div class="plan-rating">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-              <span>4.99 (12.196)</span>
-            </div>
-            <p class="plan-name">UNITV Recarga Trimestral</p>
-            <div class="plan-price-old">
-              R$ 150,00 <span class="plan-discount">-53%</span>
-            </div>
-            <div class="plan-price"><small>R$</small>69,90</div>
-            <a href="https://loja.controleunitv.shop/checkout?plano=trimestral" class="plan-btn plan-btn-primary" target="_blank" rel="noopener noreferrer">
-              <i class="bi bi-bag-heart-fill"></i> Comprar Agora
-            </a>
-          </div>
-        </div>
-
-        <!-- Card Anual -->
-        <div class="plan-card fade-up delay-3">
-          <div class="plan-img-wrap">
-            <img src="https://controleunitv.shop/wp-content/uploads/2026/03/card-365-1.png" alt="UNITV Recarga Anual" loading="lazy">
-          </div>
-          <div class="plan-body">
-            <div class="plan-rating">
-              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-              <span>4.99 (12.196)</span>
-            </div>
-            <p class="plan-name">UNITV Recarga Anual</p>
-            <div class="plan-price-old">
-              R$ 400,00 <span class="plan-discount">-57%</span>
-            </div>
-            <div class="plan-price"><small>R$</small>169,90</div>
-            <a href="https://loja.controleunitv.shop/checkout?plano=anual" class="plan-btn plan-btn-outline" target="_blank" rel="noopener noreferrer">
-              <i class="bi bi-bag-fill"></i> Comprar Agora
-            </a>
-          </div>
-        </div>
-
+        <?php endforeach; ?>
       </div>
     </div>
   </section>
@@ -128,25 +174,20 @@ $url_cookies     = ! empty( $slugs['cookies'] )     ? home_url( '/' . $slugs['co
   <section class="features-section">
     <div class="container">
       <div class="section-header">
-        <h2>Por que escolher a UniTV?</h2>
-        <p>Qualidade e praticidade em um único serviço.</p>
+        <h2><?php echo esc_html( $features_title ); ?></h2>
+        <p><?php echo esc_html( $features_subtitle ); ?></p>
       </div>
       <div class="features-grid">
-        <div class="feature-card fade-up delay-1">
-          <span class="feature-icon">🖥️</span>
-          <h3>+500 Canais</h3>
-          <p>Desfrute de uma incrível variedade de entretenimento com mais de 500 canais disponíveis.</p>
+        <?php $fi = 0; foreach ( $features as $feat ) :
+          $delay = $delays[ $fi % count( $delays ) ];
+          $fi++;
+        ?>
+        <div class="feature-card fade-up <?php echo esc_attr( $delay ); ?>">
+          <span class="feature-icon"><?php echo esc_html( $feat['icon'] ); ?></span>
+          <h3><?php echo esc_html( $feat['title'] ); ?></h3>
+          <p><?php echo esc_html( $feat['desc'] ); ?></p>
         </div>
-        <div class="feature-card fade-up delay-2">
-          <span class="feature-icon">▶️</span>
-          <h3>+5 Mil Filmes e Séries</h3>
-          <p>Biblioteca impressionante com mais de 5 mil filmes e séries à sua disposição.</p>
-        </div>
-        <div class="feature-card fade-up delay-3">
-          <span class="feature-icon">💬</span>
-          <h3>Envio Imediato</h3>
-          <p>Envio imediato do código via e-mail e WhatsApp após a confirmação do pagamento.</p>
-        </div>
+        <?php endforeach; ?>
       </div>
     </div>
   </section>
@@ -155,38 +196,22 @@ $url_cookies     = ! empty( $slugs['cookies'] )     ? home_url( '/' . $slugs['co
   <section class="downloads-section">
     <div class="container">
       <div class="section-header">
-        <h2>Disponível em Todos os Dispositivos</h2>
-        <p>Baixe o aplicativo para o seu dispositivo e aproveite em qualquer lugar.</p>
+        <h2><?php echo esc_html( $downloads_title ); ?></h2>
+        <p><?php echo esc_html( $downloads_subtitle ); ?></p>
       </div>
       <div class="downloads-grid">
-        <div class="download-card fade-up delay-1">
-          <img src="https://controleunitv.shop/wp-content/uploads/2026/03/nokia_C5_endi-angled-blue.png" alt="UniTV para Celular" loading="lazy">
-          <h3>Celular</h3>
-          <a href="https://www.unitvbrasil.app/unitv-celular.apk" class="btn btn-primary" download>
+        <?php $di = 0; foreach ( $downloads as $dl ) :
+          $delay = $delays[ $di % count( $delays ) ];
+          $di++;
+        ?>
+        <div class="download-card fade-up <?php echo esc_attr( $delay ); ?>">
+          <img src="<?php echo esc_url( $dl['img'] ); ?>" alt="UniTV para <?php echo esc_attr( $dl['name'] ); ?>" loading="lazy">
+          <h3><?php echo esc_html( $dl['name'] ); ?></h3>
+          <a href="<?php echo esc_url( $dl['url'] ); ?>" class="btn btn-primary" download>
             <i class="bi bi-download"></i> Baixar APK
           </a>
         </div>
-        <div class="download-card fade-up delay-2">
-          <img src="https://controleunitv.shop/wp-content/uploads/2026/03/stick_br-300x300-1.png" alt="UniTV para Fire Stick" loading="lazy">
-          <h3>Fire Stick</h3>
-          <a href="https://www.unitvbrasil.app/unitv-tv.apk" class="btn btn-primary" download>
-            <i class="bi bi-download"></i> Baixar APK
-          </a>
-        </div>
-        <div class="download-card fade-up delay-3">
-          <img src="https://controleunitv.shop/wp-content/uploads/2026/03/box_br-300x300-1.png" alt="UniTV para TV Box" loading="lazy">
-          <h3>TV Box</h3>
-          <a href="https://www.unitvbrasil.app/unitv-tv.apk" class="btn btn-primary" download>
-            <i class="bi bi-download"></i> Baixar APK
-          </a>
-        </div>
-        <div class="download-card fade-up delay-4">
-          <img src="https://controleunitv.shop/wp-content/uploads/2026/03/tv_br-300x300-1.png" alt="UniTV para Smart TV" loading="lazy">
-          <h3>Smart TV</h3>
-          <a href="https://www.unitvbrasil.app/unitv-tv.apk" class="btn btn-primary" download>
-            <i class="bi bi-download"></i> Baixar APK
-          </a>
-        </div>
+        <?php endforeach; ?>
       </div>
     </div>
   </section>
@@ -195,42 +220,24 @@ $url_cookies     = ! empty( $slugs['cookies'] )     ? home_url( '/' . $slugs['co
   <section class="reviews-section">
     <div class="container">
       <div class="section-header">
-        <h2>O que nossos clientes dizem</h2>
-        <p>Mais de 30 mil recargas realizadas e clientes satisfeitos.</p>
+        <h2><?php echo esc_html( $reviews_title ); ?></h2>
+        <p><?php echo esc_html( $reviews_subtitle ); ?></p>
       </div>
       <div class="reviews-grid">
-        <div class="review-card fade-up delay-1">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Experiência incrível! Atendimento ágil e eficiente. Recomendo!"</p>
+        <?php $ri = 0; foreach ( $reviews as $rev ) :
+          $delay = $delays[ $ri % count( $delays ) ];
+          $stars = max( 1, min( 5, (int) ( $rev['stars'] ?? 5 ) ) );
+          $ri++;
+        ?>
+        <div class="review-card fade-up <?php echo esc_attr( $delay ); ?>">
+          <div class="review-stars"><?php echo esc_html( str_repeat( '★', $stars ) ); ?></div>
+          <p class="review-text"><?php echo esc_html( $rev['text'] ); ?></p>
           <div class="review-author">
-            <img src="https://controleunitv.shop/wp-content/uploads/2026/03/unnamed-3.jpg" alt="Jonas Jose" loading="lazy">
-            <span class="review-author-name">Jonas Jose</span>
+            <img src="<?php echo esc_url( $rev['avatar'] ); ?>" alt="<?php echo esc_attr( $rev['name'] ); ?>" loading="lazy">
+            <span class="review-author-name"><?php echo esc_html( $rev['name'] ); ?></span>
           </div>
         </div>
-        <div class="review-card fade-up delay-2">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Compra rápida, sem enrolação. Ótimo atendimento!"</p>
-          <div class="review-author">
-            <img src="https://controleunitv.shop/wp-content/uploads/2026/03/unnamed-4.jpg" alt="Ygor Brito" loading="lazy">
-            <span class="review-author-name">Ygor Brito</span>
-          </div>
-        </div>
-        <div class="review-card fade-up delay-3">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Recebi no e-mail/WhatsApp em minutos. Muito prático."</p>
-          <div class="review-author">
-            <img src="https://controleunitv.shop/wp-content/uploads/2026/03/unnamed-5.jpg" alt="Selma Novacek" loading="lazy">
-            <span class="review-author-name">Selma Novacek</span>
-          </div>
-        </div>
-        <div class="review-card fade-up delay-4">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">"Serviço confiável, preço justo e suporte excelente."</p>
-          <div class="review-author">
-            <img src="https://controleunitv.shop/wp-content/uploads/2026/03/unnamed-6.jpg" alt="Eziel José Tiano" loading="lazy">
-            <span class="review-author-name">Eziel José Tiano</span>
-          </div>
-        </div>
+        <?php endforeach; ?>
       </div>
     </div>
   </section>
@@ -240,30 +247,41 @@ $url_cookies     = ! empty( $slugs['cookies'] )     ? home_url( '/' . $slugs['co
     <div class="container">
       <div class="footer-inner">
         <div>
-          <div class="footer-brand-label">UniTV</div>
-          <div class="footer-sub">Recargas Digitais — Venda de cartões de recarga digitais</div>
+          <div class="footer-brand-label"><?php echo esc_html( $footer_brand ); ?></div>
+          <div class="footer-sub"><?php echo esc_html( $footer_subtitle ); ?></div>
         </div>
-        <p class="footer-phone"><i class="bi bi-telephone-fill"></i> (41) 98461‑3998</p>
+        <?php if ( $footer_phone ) : ?>
+        <p class="footer-phone"><i class="bi bi-telephone-fill"></i> <?php echo esc_html( $footer_phone ); ?></p>
+        <?php endif; ?>
         <div class="footer-actions">
-          <a href="#recargas" class="btn btn-primary"><i class="bi bi-bag-heart-fill"></i> Comprar Recarga</a>
-          <a href="https://wa.me/5541984613998" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+          <?php if ( $footer_show_buy ) : ?>
+          <a href="<?php echo esc_attr( $hero_cta_link ); ?>" class="btn btn-primary"><i class="bi bi-bag-heart-fill"></i> Comprar Recarga</a>
+          <?php endif; ?>
+          <?php if ( $footer_show_wa ) : ?>
+          <a href="<?php echo esc_url( $wa_url ); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
             <i class="bi bi-whatsapp"></i> WhatsApp
           </a>
+          <?php endif; ?>
         </div>
         <nav class="footer-links">
           <a href="<?php echo esc_url( $url_privacidade ); ?>">Política de Privacidade</a>
           <a href="<?php echo esc_url( $url_termos ); ?>">Termos de Uso</a>
           <a href="<?php echo esc_url( $url_reembolso ); ?>">Política de Reembolso</a>
           <a href="<?php echo esc_url( $url_cookies ); ?>">Política de Cookies</a>
+          <?php foreach ( $footer_links as $fl ) : if ( empty( $fl['label'] ) ) continue; ?>
+          <a href="<?php echo esc_url( $fl['url'] ); ?>"><?php echo esc_html( $fl['label'] ); ?></a>
+          <?php endforeach; ?>
         </nav>
-        <p class="footer-copy">&copy; <?php echo esc_html( date( 'Y' ) ); ?> UniTV. Todos os direitos reservados.</p>
+        <p class="footer-copy">&copy; <?php echo esc_html( date( 'Y' ) ); ?> <?php echo esc_html( $footer_copyright ); ?></p>
       </div>
     </div>
   </footer>
 
   <!-- FAB WhatsApp -->
-  <a href="https://wa.me/5541984613998" class="fab-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
+  <?php if ( $show_fab ) : ?>
+  <a href="<?php echo esc_url( $wa_url ); ?>" class="fab-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp">
     <i class="bi bi-whatsapp"></i>
   </a>
+  <?php endif; ?>
 
 </div><!-- .unitv-wrap -->

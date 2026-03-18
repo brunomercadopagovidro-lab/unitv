@@ -1,0 +1,359 @@
+/* =============================================================
+   UniTV Recargas VIP — admin.css
+   ============================================================= */
+
+.unitv-admin-wrap {
+  max-width: 1000px;
+  padding: 24px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.unitv-admin-title {
+  font-size: 1.5rem !important;
+  font-weight: 700;
+  color: #1b1b1f;
+  margin-bottom: 20px !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.unitv-admin-logo { font-size: 1.8rem; }
+
+.unitv-admin-subtitle {
+  font-size: 1rem;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+/* ---------------------------------------------------------------
+   Notices
+   ------------------------------------------------------------- */
+.unitv-notice {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: .9rem;
+}
+
+.unitv-notice-success {
+  background: #ecfdf5;
+  border: 1px solid #6ee7b7;
+  color: #065f46;
+}
+
+.unitv-notice-info {
+  background: #eff6ff;
+  border: 1px solid #93c5fd;
+  color: #1e40af;
+}
+
+/* ---------------------------------------------------------------
+   Cards
+   ------------------------------------------------------------- */
+.unitv-card {
+  background: #fff;
+  border: 1px solid #e8e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+.unitv-card-title {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: #1b1b1f !important;
+  margin: 0 0 16px !important;
+  padding: 0 0 12px !important;
+  border-bottom: 1px solid #e8e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* ---------------------------------------------------------------
+   Table / Form
+   ------------------------------------------------------------- */
+.unitv-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.unitv-table th,
+.unitv-table td {
+  padding: 10px 0;
+  vertical-align: top;
+  border-bottom: 1px solid #f0f0f6;
+  font-size: .88rem;
+}
+
+.unitv-table th {
+  width: 220px;
+  font-weight: 600;
+  color: #374151;
+  padding-right: 20px;
+}
+
+.unitv-table tr:last-child th,
+.unitv-table tr:last-child td {
+  border-bottom: none;
+}
+
+.unitv-input {
+  width: 100%;
+  max-width: 520px;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: .88rem;
+  color: #1b1b1f;
+  background: #f9f9fc;
+  transition: border-color .2s;
+}
+
+.unitv-input:focus {
+  border-color: #c71b3a;
+  outline: none;
+  background: #fff;
+}
+
+.unitv-input-sm {
+  width: 140px;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: .88rem;
+  color: #1b1b1f;
+  background: #f9f9fc;
+}
+
+.unitv-input-sm:focus {
+  border-color: #c71b3a;
+  outline: none;
+}
+
+textarea.unitv-input {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+/* ---------------------------------------------------------------
+   Repeater rows
+   ------------------------------------------------------------- */
+.unitv-repeater-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #f8f7fc;
+  border: 1px solid #e8e8f0;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.unitv-row-handle {
+  cursor: grab;
+  color: #9ca3af;
+  font-size: 1.2rem;
+  padding-top: 2px;
+  user-select: none;
+}
+
+.unitv-row-body {
+  flex: 1;
+}
+
+.unitv-row-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.unitv-col-full {
+  grid-column: 1 / -1;
+}
+
+.unitv-row-grid label,
+.unitv-row-body label {
+  display: block;
+  font-size: .78rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.unitv-row-grid input,
+.unitv-row-grid textarea,
+.unitv-row-grid select {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  font-size: .85rem;
+  background: #fff;
+  color: #1b1b1f;
+}
+
+.unitv-row-grid input:focus,
+.unitv-row-grid textarea:focus,
+.unitv-row-grid select:focus {
+  border-color: #c71b3a;
+  outline: none;
+}
+
+.unitv-row-checks {
+  display: flex;
+  gap: 20px;
+  font-size: .83rem;
+}
+
+.unitv-row-checks label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+
+.unitv-row-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ef4444;
+  font-size: 1.1rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background .2s;
+  flex-shrink: 0;
+}
+
+.unitv-row-remove:hover { background: #fee2e2; }
+
+/* ---------------------------------------------------------------
+   Buttons (Add row)
+   ------------------------------------------------------------- */
+.unitv-btn-add {
+  background: rgba(199,27,58,.1);
+  border: 1px solid rgba(199,27,58,.25);
+  color: #c71b3a;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.unitv-btn-add:hover { background: rgba(199,27,58,.18); }
+
+/* ---------------------------------------------------------------
+   Helper rows (trust etc.)
+   ------------------------------------------------------------- */
+.unitv-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f6;
+}
+
+.unitv-row:last-child { border-bottom: none; }
+
+.unitv-row-num {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #b50f3a, #6a11cb);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.unitv-row-body label {
+  display: block;
+  font-size: .78rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 8px 0 4px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.unitv-row-body label:first-child { margin-top: 0; }
+
+.unitv-row-body input {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  padding: 7px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  font-size: .85rem;
+  background: #fff;
+  color: #1b1b1f;
+}
+
+.unitv-row-body input:focus {
+  border-color: #c71b3a;
+  outline: none;
+}
+
+/* ---------------------------------------------------------------
+   Actions bar
+   ------------------------------------------------------------- */
+.unitv-admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0 10px;
+}
+
+.unitv-btn-save {
+  background: linear-gradient(135deg, #b50f3a, #6a11cb);
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter .2s, transform .2s;
+  letter-spacing: .04em;
+}
+
+.unitv-btn-save:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.unitv-btn-reset {
+  background: #fff;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+  padding: 11px 22px;
+  border-radius: 50px;
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+}
+
+.unitv-btn-reset:hover {
+  border-color: #9ca3af;
+  color: #374151;
+}
